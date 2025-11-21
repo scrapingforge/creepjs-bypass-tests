@@ -91,53 +91,37 @@ After running tests, screenshots will be saved in the `./data/` directory:
 
 ## Expected Stealth Scores
 
-Based on testing against CreepJS:
-
-### Headless Mode
-- Puppeteer + Stealth: **67%**
-- Playwright + Stealth: **71%**
-- Selenium + UC: **76%**
-- Golang chromedp: **69%**
-- Basic Firefox: **61%**
-
-### Xvfb (Virtual Display) Mode
-- Puppeteer + Stealth + Xvfb: **88%**
-- Playwright + Stealth + Xvfb: **90%**
-- Selenium + UC + Xvfb: **91%**
-- Golang chromedp + Xvfb: **87%**
-- Camoufox + Xvfb: **95%** ⭐ **Best**
-
 ## Framework Details
 
 ### Puppeteer
 - **Language:** Node.js
 - **Stealth Plugin:** puppeteer-extra-plugin-stealth
 - **Best Use Case:** Node.js projects, large ecosystem
-- **Stealth Score:** 88% (with Xvfb)
+
 
 ### Playwright
 - **Language:** Node.js
 - **Stealth Plugin:** puppeteer-extra-plugin-stealth (via playwright-extra)
 - **Best Use Case:** Multi-browser support, modern API
-- **Stealth Score:** 90% (with Xvfb)
+
 
 ### Selenium
 - **Language:** Python
 - **Stealth Library:** undetected-chromedriver
 - **Best Use Case:** Python projects, mature ecosystem
-- **Stealth Score:** 91% (with Xvfb)
+
 
 ### Golang chromedp
 - **Language:** Golang
 - **Stealth Approach:** Chrome flags
 - **Best Use Case:** High-performance, production-scale scraping
-- **Stealth Score:** 87% (with Xvfb)
+
 
 ### Camoufox
 - **Language:** Python
 - **Stealth Approach:** Firefox with built-in anti-fingerprinting
 - **Best Use Case:** Maximum stealth, privacy-focused scraping
-- **Stealth Score:** 95% (with Xvfb) ⭐ **Winner**
+
 
 ## Troubleshooting
 
