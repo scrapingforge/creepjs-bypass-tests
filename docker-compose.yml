@@ -1,0 +1,57 @@
+services:
+  puppeteer-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.puppeteer
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - DISPLAY=:99
+    shm_size: '2gb'
+
+  playwright-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.playwright
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - DISPLAY=:99
+    shm_size: '2gb'
+
+  selenium-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.selenium
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - DISPLAY=:99
+    shm_size: '2gb'
+
+  golang-chromedp-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.golang
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - DISPLAY=:99
+    shm_size: '2gb'
+
+  camoufox-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile.camoufox
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - DISPLAY=:99
+    shm_size: '2gb'

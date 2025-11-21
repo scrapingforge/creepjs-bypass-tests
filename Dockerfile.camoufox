@@ -1,0 +1,50 @@
+FROM python:3.13-slim
+
+# Install Xvfb, Firefox dependencies, and required tools
+RUN apt-get update && apt-get install -y \
+    wget \
+    xvfb \
+    x11vnc \
+    fluxbox \
+    fonts-liberation \
+    fonts-noto-color-emoji \
+    libgtk-3-0 \
+    libdbus-glib-1-2 \
+    libx11-xcb1 \
+    libxt6 \
+    libpci3 \
+    libasound2 \
+    libgdk-pixbuf-2.0-0 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libnss3 \
+    libnspr4 \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements-camoufox.txt .
+RUN pip install --no-cache-dir -r requirements-camoufox.txt && \
+    playwright install firefox
+
+COPY . .
+
+ENV DISPLAY=:99
+
+# Create startup script with Xvfb
+RUN echo '#!/bin/bash\n\
+rm -f /tmp/.X99-lock\n\
+Xvfb :99 -screen 0 1920x1080x24 -ac +extension GLX +render -noreset &\n\
+sleep 2\n\
+exec python src/camoufox-scraper.py' > /start.sh && chmod +x /start.sh
+
+CMD ["/start.sh"]
