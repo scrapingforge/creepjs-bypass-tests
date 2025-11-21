@@ -1,0 +1,20 @@
+{
+  "name": "creepjs-bypass",
+  "version": "1.0.0",
+  "description": "Testing browser fingerprinting bypass with multiple frameworks",
+  "main": "index.js",
+  "scripts": {
+    "puppeteer": "node src/puppeteer-scraper.js",
+    "playwright": "node src/playwright-scraper.js"
+  },
+  "keywords": ["web-scraping", "fingerprinting", "creepjs"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer": "^23.7.1",
+    "playwright-extra": "^4.3.6",
+    "playwright": "^1.56.1"
+  }
+}

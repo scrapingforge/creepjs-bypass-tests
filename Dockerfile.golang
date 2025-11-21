@@ -1,0 +1,42 @@
+FROM golang:1.23-bookworm
+
+# Install Xvfb, Chrome, and dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg \
+    xvfb \
+    x11vnc \
+    fluxbox \
+    fonts-liberation \
+    fonts-noto-color-emoji \
+    ca-certificates \
+    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy go module files and source
+COPY go.mod ./
+COPY src/ ./src/
+
+# Download dependencies and build
+RUN go mod download && \
+    go mod tidy && \
+    go build -o /app/scraper ./src/golang-scraper.go
+
+ENV DISPLAY=:99
+
+# Copy remaining files for runtime
+COPY . .
+
+# Create startup script with Xvfb
+RUN echo '#!/bin/bash\n\
+rm -f /tmp/.X99-lock\n\
+Xvfb :99 -screen 0 1920x1080x24 -ac +extension GLX +render -noreset &\n\
+sleep 2\n\
+exec /app/scraper' > /start.sh && chmod +x /start.sh
+
+CMD ["/start.sh"]
